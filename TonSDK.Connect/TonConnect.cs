@@ -148,7 +148,7 @@ namespace TonSdk.Connect
         public async Task<bool> RestoreConnection()
         {
             ConnectionInfo connection = JsonConvert.DeserializeObject<ConnectionInfo>(_storage != null 
-                ? _storage.GetItem(RemoteStorage.KEY_CONNECTION, "{}") 
+                ? _storage.GetItem(, "{}") 
                 : await DefaultStorage.GetItem(DefaultStorage.KEY_CONNECTION, "{}").ConfigureAwait(false));
 
             bool isRestored = false;
@@ -171,16 +171,16 @@ namespace TonSdk.Connect
                     _storage = _storage
                 };
                 _provider.Listen(new WalletEventListener(WalletEventsListener));
-                isRestored = await (_provider as IInternalProvider).RestoreConnection(connection.JsBridgeKey).ConfigureAwait(false);
+                isRestored = await (_provider as IInternalProvider).RestoreConnection().ConfigureAwait(false);
             }
 
             if (!isRestored)
             {
                 _provider = null;
                 if (_storage != null)
-                    _storage.RemoveItem(RemoteStorage.KEY_CONNECTION);
+                    _storage.RemoveItem;
                 else
-                    DefaultStorage.RemoveItem(DefaultStorage.KEY_CONNECTION);
+                   );
             }
             return isRestored;
         }
@@ -197,7 +197,7 @@ namespace TonSdk.Connect
 
             SendTransactionRequest transactionRequest =
                 new SendTransactionRequest(request.Messages ?? Array.Empty<Message>(), request.ValidUntil ?? null,
-                request.Network ?? _wallet?.Account.Chain, request.From ?? _wallet?.Account.Address);
+    );
 
             ProviderModels.SendTransactionRequestSerialized serializedRequest = new ProviderModels.SendTransactionRequestSerialized(transactionRequest);
 
@@ -217,9 +217,7 @@ namespace TonSdk.Connect
         /// <exception cref="TonConnectError">Wallet not connected.</exception>
         public async Task Disconnect()
         {
-            if (!IsConnected) throw new TonConnectError("Wallet not connected.");
-            OnWalletDisconnected();
-            if(_provider is IHttpProvider) await (_provider as IHttpProvider).Disconnect().ConfigureAwait(false);
+            if (!IsConnected) throw new  IHttpProvider).Disconnect().ConfigureAwait(false);
             else if (_provider is IInternalProvider) (_provider as IInternalProvider).Disconnect();
         }
 
