@@ -337,20 +337,7 @@ namespace TonSdk.Connect
             switch ((int)errorData.Code)
             {
                 case 0: throw new UnknownError();
-                case 1: throw new BadRequestError();
-                case 2: throw new ManifestNotFoundError();
-                case 3: throw new ManifestContentError();
-                case 100: throw new UnknownAppError();
-                case 300: throw new UserRejectsError();
-            }
-        }
-
-        private void OnWalletDisconnected()
-        {
-            _wallet = null;
-            foreach (StatusChangeCallback listener in _statusChangeCallbacksSubscriptions)
-            {
-                listener(new Wallet());
+                case 1: throw new 
             }
         }
 
